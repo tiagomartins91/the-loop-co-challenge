@@ -1,7 +1,10 @@
 package com.loopco.pricesolution.entity;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
+@Getter
 @Entity
 public class Brand {
 

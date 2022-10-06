@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS brand
     name    VARCHAR NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS prices
+CREATE TABLE IF NOT EXISTS price
 (
     id          SERIAL PRIMARY KEY,
     brand_id    int8 REFERENCES brand(id) NOT NULL,
