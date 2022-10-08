@@ -1,0 +1,27 @@
+<div class="d-flex m-5">
+  <div class="d-flex w-100 bg-white border-radius-10px">
+
+    <div class="d-flex flex-column m-5">
+      <span>Product price x to Brand y</span>
+
+      <mat-form-field>
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [(ngModel)]="date"
+          [min]="minDate" [max]="maxDate" [disabled]="disabled">
+        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+          [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+          [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian">
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <div class="d-flex">
+        <button mat-flat-button [disabled]="date == null" color="primary" (click)="searchPrice()">Get Price</button>
+      </div>
+  </div>
+
+  </div>
+</div>
+
+
+
+
