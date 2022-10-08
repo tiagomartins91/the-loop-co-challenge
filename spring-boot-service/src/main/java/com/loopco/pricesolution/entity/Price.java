@@ -41,4 +41,15 @@ public class Price {
     @Column(name = "curr", nullable = false)
     private String currency;
 
+    public boolean isStartDateEqualOrBefore(LocalDateTime date) {
+        return this.startDate.equals(date) || this.startDate.isBefore(date);
+    }
+
+    public boolean isEndDateEqualOrAfter(LocalDateTime date) {
+        return this.endDate.equals(date) || this.endDate.isAfter(date);
+    }
+
+    public Long getBrandId() {
+        return this.brand.getId();
+    }
 }
