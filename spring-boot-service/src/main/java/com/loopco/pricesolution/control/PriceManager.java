@@ -1,5 +1,7 @@
 package com.loopco.pricesolution.control;
 
+import com.loopco.pricesolution.control.calculator.CalculatorResult;
+import com.loopco.pricesolution.control.calculator.VatCalculator;
 import com.loopco.pricesolution.entity.Price;
 import com.loopco.pricesolution.exception.PriceNotFoundException;
 import com.loopco.pricesolution.transfer.PriceRequest;
@@ -32,20 +34,26 @@ public class PriceManager implements PriceControl {
         Price price = getPrice(priceList, priceRequest.getRequestedDateTime())
                 .orElseThrow(PriceNotFoundException::priceNotFound);
 
-        final PriceSummary priceSummary = buildPriceSummary(priceRequest.getRequestedDateTime(), price);
+        final CalculatorResult priceCalculatorResult = calcVat(price);
+
+
+        final PriceSummary priceSummary = PriceSummary.builder()
+                .priceDate(priceRequest.getRequestedDateTime())
+                .brandId(price.getBrandId())
+                .productId(price.getProductId())
+                .curr(price.getCurrency())
+                .vat(priceCalculatorResult.getVat())
+                .vatAmout(priceCalculatorResult.getVatAmount())
+                .price(priceCalculatorResult.getPrice())
+                .finalPrice(priceCalculatorResult.getFinalPrice())
+                .build();
 
         return Optional.of(priceSummary);
     }
 
-    private PriceSummary buildPriceSummary(LocalDateTime requestedPriceDate, Price price) {
-        return PriceSummary.builder()
-                .priceDate(requestedPriceDate)
-                .brandId(price.getBrandId())
-                .productId(price.getProductId())
-                .finalPrice(price.getPrice())
-                .vat(price.getVat())
-                .curr(price.getCurrency())
-                .build();
+    private CalculatorResult calcVat(Price price) {
+        VatCalculator vatCalculator = new VatCalculator(price.getPrice(), price.getVat());
+        return vatCalculator.calculate();
     }
 
     private Optional<Price> getPrice(List<Price> priceList, LocalDateTime requestedDateTime) {
