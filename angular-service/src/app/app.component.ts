@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { RestService } from 'app/services';
 import { ThemePalette } from '@angular/material/core';
+import { Price } from './models/Price.model';
 
-
+const DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss";
 
 @Component({
   selector: 'app-root',
@@ -30,6 +32,10 @@ export class AppComponent implements OnInit {
   public stepSecond = 1;
 
   public color: ThemePalette = 'primary';
+
+  productId: Number = 35455;
+  brandId: Number = 1;
+  priceSearchResul: any;
 
   constructor( private restService: RestService) { }
 
@@ -70,16 +76,12 @@ export class AppComponent implements OnInit {
   }
 
   searchPrice() {
-    console.log(this.date.format("YYYY-MM-DD HH:mm:ss"));
+    const dateFormated = this.date.format(DATE_FORMAT);
+    const params = {date: dateFormated, productId: this.productId, brandId: this.brandId};
 
-    this.restService.queryPrices().subscribe({
-      complete: () =>
-        console.log(this)
-      ,
-      error: console.error
-      }
-    );
+    this.restService.queryPrices(params).subscribe((res: HttpResponse<Price>) => {
+      this.priceSearchResul = res?.body;
+    });
   }
-
 
 }

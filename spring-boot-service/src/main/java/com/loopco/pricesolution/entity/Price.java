@@ -41,6 +41,9 @@ public class Price {
     @Column(name = "curr", nullable = false)
     private String currency;
 
+    @Column(name = "vat", nullable = false)
+    private BigDecimal vat;
+
     public boolean isStartDateEqualOrBefore(LocalDateTime date) {
         return this.startDate.equals(date) || this.startDate.isBefore(date);
     }

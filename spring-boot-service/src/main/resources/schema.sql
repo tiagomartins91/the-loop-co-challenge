@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS price
     product_id  INTEGER NOT NULL,
     priority    INTEGER NOT NULL,
     price       DECIMAL(4, 2) NOT NULL,
-    curr        VARCHAR(10) NOT NULL
+    curr        VARCHAR(10) NOT NULL,
+    vat         DECIMAL(4, 2) NOT NULL
 );

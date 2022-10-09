@@ -32,16 +32,22 @@ public class PriceManager implements PriceControl {
 
         //TODO - catch null here and error logging
 
-        final PriceSummary priceSummary = PriceSummary.builder()
-                .priceDate(priceRequest.getRequestedDateTime())
-                .brandId(price.getBrandId())
-                .productId(priceRequest.getProductId())
-                .price(price.getPrice())
-                .curr(price.getCurrency())
-                .build();
+        final PriceSummary priceSummary = buildPriceSummary(priceRequest.getRequestedDateTime(), price);
 
         return Optional.of(priceSummary);
     }
+
+    private PriceSummary buildPriceSummary(LocalDateTime requestedPriceDate, Price price) {
+       return PriceSummary.builder()
+                .priceDate(requestedPriceDate)
+                .brandId(price.getBrandId())
+                .productId(price.getProductId())
+                .finalPrice(price.getPrice())
+                .vat(price.getVat())
+                .curr(price.getCurrency())
+                .build();
+    }
+
 
     private Price getPrice(List<Price> priceList, LocalDateTime requestedDateTime) {
         return priceList.stream()

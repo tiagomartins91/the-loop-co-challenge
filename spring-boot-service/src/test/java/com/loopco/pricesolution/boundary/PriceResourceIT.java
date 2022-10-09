@@ -41,7 +41,7 @@ class PriceResourceIT {
         //@formatter:off
         given()
             .contentType(APPLICATION_JSON_VALUE)
-            .queryParam("date", "2022-06-14 10:00:00")
+            .queryParam("date", "2022-06-14T10:00:00")
             .queryParam("productId", "35455")
             .queryParam("brandId", "1")
         .when()
@@ -53,7 +53,7 @@ class PriceResourceIT {
             .body(Matchers.notNullValue())
             .body("brandId", Matchers.equalTo(1))
             .body("productId", Matchers.equalTo(35455))
-            .body("price", Matchers.equalTo(35.50f));
+            .body("finalPrice", Matchers.equalTo(35.50f));
         //@formatter:on
     }
 
@@ -76,7 +76,7 @@ class PriceResourceIT {
              .body(Matchers.notNullValue())
              .body("brandId", Matchers.equalTo(1))
              .body("productId", Matchers.equalTo(35455))
-             .body("price", Matchers.equalTo(25.45f));
+             .body("finalPrice", Matchers.equalTo(25.45f));
         //@formatter:on
     }
 
@@ -99,7 +99,7 @@ class PriceResourceIT {
             .body(Matchers.notNullValue())
             .body("brandId", Matchers.equalTo(1))
             .body("productId", Matchers.equalTo(35455))
-            .body("price", Matchers.equalTo(35.50f));
+            .body("finalPrice", Matchers.equalTo(35.50f));
         //@formatter:on
     }
 
@@ -122,7 +122,7 @@ class PriceResourceIT {
             .body(Matchers.notNullValue())
             .body("brandId", Matchers.equalTo(1))
             .body("productId", Matchers.equalTo(35455))
-            .body("price", Matchers.equalTo(30.50f));
+            .body("finalPrice", Matchers.equalTo(30.50f));
         //@formatter:on
     }
 
@@ -145,7 +145,7 @@ class PriceResourceIT {
             .body(Matchers.notNullValue())
             .body("brandId", Matchers.equalTo(1))
             .body("productId", Matchers.equalTo(35455))
-            .body("price", Matchers.equalTo(38.95f));
+            .body("finalPrice", Matchers.equalTo(38.95f));
         //@formatter:on
     }
 

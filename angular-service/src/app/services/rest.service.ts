@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { CommonService } from './common/common.service';
+import { Price } from '../models/Price.model';
 
-type EntityResponseType = HttpResponse<any>;
+type EntityResponseType = HttpResponse<Price>;
 
 @Injectable({
   providedIn: 'root'
