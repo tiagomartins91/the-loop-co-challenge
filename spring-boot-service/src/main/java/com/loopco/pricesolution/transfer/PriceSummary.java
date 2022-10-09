@@ -16,7 +16,7 @@ public class PriceSummary {
     private final Integer productId;
     private final String curr;
     private final BigDecimal vat;
-    private final BigDecimal vatAmout;
+    private final BigDecimal vatAmount;
     private final BigDecimal price;
     private final BigDecimal finalPrice;
 

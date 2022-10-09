@@ -9,7 +9,7 @@ const DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -36,51 +36,30 @@ export class AppComponent implements OnInit {
   productId: Number = 35455;
   brandId: Number = 1;
   priceSearchResul: any;
+  showErrorMessage = false;
 
   constructor( private restService: RestService) { }
 
   ngOnInit() {
   }
 
-  toggleMinDate(evt: any) {
-    if (evt.checked) {
-      this._setMinDate();
-    } else {
-      this.minDate = null;
-    }
-  }
-
-  toggleMaxDate(evt: any) {
-    if (evt.checked) {
-      this._setMaxDate();
-    } else {
-      this.maxDate = null;
-    }
-  }
-
-  closePicker() {
-    this.picker.cancel();
-  }
-
-  private _setMinDate() {
-    const now = new Date();
-    this.minDate = new Date();
-    this.minDate.setDate(now.getDate() - 1);
-  }
-
-
-  private _setMaxDate() {
-    const now = new Date();
-    this.maxDate = new Date();
-    this.maxDate.setDate(now.getDate() + 1);
-  }
-
   searchPrice() {
+    this.showErrorMessage = false;
     const dateFormated = this.date.format(DATE_FORMAT);
     const params = {date: dateFormated, productId: this.productId, brandId: this.brandId};
 
+    /*
     this.restService.queryPrices(params).subscribe((res: HttpResponse<Price>) => {
       this.priceSearchResul = res?.body;
+    },
+    (error: any) => {
+
+    });
+    */
+
+    this.restService.queryPrices(params).subscribe({
+      next: (val) => this.priceSearchResul = val?.body,
+      error: (err) => this.showErrorMessage = true
     });
   }
 

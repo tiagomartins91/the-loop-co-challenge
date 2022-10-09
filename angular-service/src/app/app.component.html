@@ -1,12 +1,11 @@
-<div class="d-flex m-5">
-  <div class="d-flex w-100 bg-white align-items-center border-radius-10px">
-
+<div class="d-flex flex-column m-5">
+  <h1 class="d-flex justify-content-center mt-3 mb-5">THE LOOP co. Spring Boot/Angular Challenge</h1>
+  <div class="d-flex w-100 bg-white align-items-center border-radius-10px card-flex-direction">
     <div class="d-flex flex-column m-5 w-50">
+      <div class="d-flex flex-column">
       <div class="d-flex justify-content-center">
-        <span class="mb-3">Pricing Search, Brand {{brandId}} Product {{productId}}</span>
+        <span class="mb-3">Pricing Search for Brand {{brandId}} Product {{productId}}</span>
       </div>
-
-
       <mat-form-field>
         <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [(ngModel)]="date"
           [min]="minDate" [max]="maxDate" [disabled]="disabled">
@@ -16,29 +15,28 @@
           [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian">
         </ngx-mat-datetime-picker>
       </mat-form-field>
-
       <div class="d-flex justify-content-end">
         <button mat-flat-button [disabled]="date == null" color="primary" (click)="searchPrice()">Get Price</button>
       </div>
     </div>
+    </div>
     <div class="d-flex m-4 w-100">
-      <div *ngIf="priceSearchResul" class="d-flex w-100 bg-card-body border-radius-10px">
-        <div class="d-flex w-50 flex-column m-3">
+      <div *ngIf="priceSearchResul || showErrorMessage" class="d-flex w-100 bg-card-body border-radius-10px">
+        <div *ngIf="showErrorMessage" class="d-flex w-50 flex-column m-3">
+            <b>Price is not available! Please select other date and try again!</b>
+        </div>
+        <div *ngIf="priceSearchResul && !showErrorMessage" class="d-flex w-50 flex-column m-3">
           <span class="text-secondary font-weight-bold">Date: <b>{{priceSearchResul?.priceDate | date: 'YYYY-MM-dd HH:mm:ss'}}</b></span>
-
           <span class="text-secondary font-weight-bold mt-1">Brand: <b>{{priceSearchResul?.brandId}}</b></span>
           <span class="text-secondary font-weight-bold mt-1">Product: <b>{{priceSearchResul?.productId}}</b></span>
 
-          <span class="text-secondary font-weight-bold mt-1">Price wihout VAT: <b></b></span>
-          <span class="text-secondary font-weight-bold mt-1">VAT: <b></b></span>
-          <span class="text-secondary font-weight-bold mt-1">Final Price: <b>{{priceSearchResul?.finalPrice}}{{priceSearchResul?.curr}}</b></span>
+          <span class="text-secondary font-weight-bold mt-1">Price without VAT: <b>{{priceSearchResul?.price}}</b></span>
+          <span class="text-secondary font-weight-bold mt-1">VAT: <b>{{priceSearchResul?.vat}}%</b></span>
+          <span class="text-secondary font-weight-bold mt-1">VAT Amount: <b>{{priceSearchResul?.vatAmount}}</b></span>
+          <span class="text-secondary font-weight-bold mt-1">Final Price: <b>{{priceSearchResul?.finalPrice}} {{priceSearchResul?.curr}}</b></span>
         </div>
-
       </div>
-
     </div>
-
-
   </div>
 </div>
 

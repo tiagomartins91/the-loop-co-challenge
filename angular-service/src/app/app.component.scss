@@ -1,0 +1,7 @@
+.card-flex-direction {
+  flex-direction: column;
+  @media (min-width: 700px) {
+    flex-direction: row;
+    padding: 10px
+  }
+}

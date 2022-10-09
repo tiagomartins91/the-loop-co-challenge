@@ -43,7 +43,7 @@ public class PriceManager implements PriceControl {
                 .productId(price.getProductId())
                 .curr(price.getCurrency())
                 .vat(priceCalculatorResult.getVat())
-                .vatAmout(priceCalculatorResult.getVatAmount())
+                .vatAmount(priceCalculatorResult.getVatAmount())
                 .price(priceCalculatorResult.getPrice())
                 .finalPrice(priceCalculatorResult.getFinalPrice())
                 .build();
