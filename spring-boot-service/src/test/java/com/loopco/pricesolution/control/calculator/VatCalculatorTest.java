@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class VatCalculatorTest {
 
-
     @Test
     void should_get_vat_amout_and_price_given_final_price_and_vat() {
+
         VatCalculator calc1 = new VatCalculator(new BigDecimal("35.50"), new BigDecimal("23"));
         CalculatorResult result1 = calc1.calculate();
 

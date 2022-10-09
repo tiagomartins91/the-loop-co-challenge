@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class PriceSummary {
+
     private final LocalDateTime priceDate;
     private final Long brandId;
     private final Integer productId;
@@ -18,4 +19,5 @@ public class PriceSummary {
     private final BigDecimal vatAmout;
     private final BigDecimal price;
     private final BigDecimal finalPrice;
+
 }

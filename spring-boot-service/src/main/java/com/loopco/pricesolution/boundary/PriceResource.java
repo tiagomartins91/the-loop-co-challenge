@@ -3,10 +3,14 @@ package com.loopco.pricesolution.boundary;
 import com.loopco.pricesolution.control.PriceControl;
 import com.loopco.pricesolution.control.PriceRepository;
 import com.loopco.pricesolution.entity.Price;
+import com.loopco.pricesolution.exception.PriceException;
+import com.loopco.pricesolution.exception.PriceNotFoundException;
 import com.loopco.pricesolution.transfer.PriceRequest;
 import com.loopco.pricesolution.transfer.PriceSummary;
 import com.loopco.pricesolution.utils.DateUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +22,7 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @AllArgsConstructor
 @RestController
@@ -68,6 +73,21 @@ public class PriceResource {
         return Optional.ofNullable(value)
                 .map(Long::parseLong)
                 .orElse(null);
+    }
+
+    @ControllerAdvice
+    static class PriceResourceExceptionHandler {
+        @ExceptionHandler(PriceException.class)
+        public final ResponseEntity<?> handleException(PriceException ex) {
+            log.error("PriceException with code: {} and message: {}", ex.getCode(), ex.getMessage());
+
+            if (ex instanceof PriceNotFoundException) {
+                HttpStatus status = ex.getCode() == 404 ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST;
+                return new ResponseEntity<>(status);
+            }
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

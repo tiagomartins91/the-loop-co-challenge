@@ -1,6 +1,7 @@
 package com.loopco.pricesolution.control;
 
 import com.loopco.pricesolution.entity.Price;
+import com.loopco.pricesolution.exception.PriceNotFoundException;
 import com.loopco.pricesolution.transfer.PriceRequest;
 import com.loopco.pricesolution.transfer.PriceSummary;
 import lombok.NonNull;
@@ -28,9 +29,8 @@ public class PriceManager implements PriceControl {
 
         List<Price> priceList = priceRepository.getAllPricesFromStartDate(priceRequest.getBrandId(), priceRequest.getProductId(), startOfTheDay);
 
-        Price price = getPrice(priceList, priceRequest.getRequestedDateTime());
-
-        //TODO - catch null here and error logging
+        Price price = getPrice(priceList, priceRequest.getRequestedDateTime())
+                .orElseThrow(PriceNotFoundException::priceNotFound);
 
         final PriceSummary priceSummary = buildPriceSummary(priceRequest.getRequestedDateTime(), price);
 
@@ -38,7 +38,7 @@ public class PriceManager implements PriceControl {
     }
 
     private PriceSummary buildPriceSummary(LocalDateTime requestedPriceDate, Price price) {
-       return PriceSummary.builder()
+        return PriceSummary.builder()
                 .priceDate(requestedPriceDate)
                 .brandId(price.getBrandId())
                 .productId(price.getProductId())
@@ -48,12 +48,10 @@ public class PriceManager implements PriceControl {
                 .build();
     }
 
-
-    private Price getPrice(List<Price> priceList, LocalDateTime requestedDateTime) {
+    private Optional<Price> getPrice(List<Price> priceList, LocalDateTime requestedDateTime) {
         return priceList.stream()
                 .filter(price -> price.isStartDateEqualOrBefore(requestedDateTime) && price.isEndDateEqualOrAfter(requestedDateTime))
-                .max(Comparator.comparing(Price::getPriority))
-                .orElse(null);
+                .max(Comparator.comparing(Price::getPriority));
 
     }
 }

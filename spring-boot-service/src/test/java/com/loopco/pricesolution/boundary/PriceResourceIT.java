@@ -149,4 +149,21 @@ class PriceResourceIT {
         //@formatter:on
     }
 
+    @Test
+    void should_get_404_not_found_if_price_doesnt_exists() {
+        final String url = "http://localhost:" + serverPort + "/api/v1/prices/search";
+
+        //@formatter:off
+        given()
+            .contentType(APPLICATION_JSON_VALUE)
+            .queryParam("date", "2022-06-13 21:00:00")
+            .queryParam("productId", "35455")
+            .queryParam("brandId", "1")
+        .when()
+            .get(url)
+            .then()
+            .statusCode(404);
+        //@formatter:on
+    }
+
 }
