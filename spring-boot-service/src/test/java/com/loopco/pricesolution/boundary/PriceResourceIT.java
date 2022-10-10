@@ -54,7 +54,7 @@ class PriceResourceIT {
             .body("brandId", Matchers.equalTo(1))
             .body("productId", Matchers.equalTo(35455))
             .body("vat", Matchers.equalTo(23f))
-            .body("vatAmout", Matchers.equalTo(6.64f))
+            .body("vatAmount", Matchers.equalTo(6.64f))
             .body("price", Matchers.equalTo(28.86f))
             .body("finalPrice", Matchers.equalTo(35.50f));
         //@formatter:on
